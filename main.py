@@ -32,3 +32,11 @@ df['diff_1'] = df['Births'].diff(1)
 df = df.dropna()
 print('\n\nNew Feature Created ...')
 print(df.head())
+
+
+# Data split (chronologically)
+train_size = int(len(df) * 0.8)
+train, test = df.iloc[:train_size], df.iloc[train_size:]
+
+y_train = train['Births']
+y_test = test['Births']
