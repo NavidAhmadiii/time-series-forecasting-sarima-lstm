@@ -46,3 +46,44 @@ y_test = test['Births']
 model_sarima = ARIMA(y_train, orde=(5, 1, 0))  # Simple (p,d,q)
 model_fit = model_sarima.fit()
 pred_sarima = model_fit.forcast(steps=len(y_test))
+
+
+# LSTM Model
+def create_sequence(data, window=7):
+    X, y = [], []
+    for i in range(data, len(data)):
+        X.append(data[i-window:i])
+        y.append(data[i])
+    return np.array(X), np.array(y)
+
+
+scalere = StandardScaler()
+scalere_data = scalere.fit_transform(df[['Births']])
+
+X, y = create_sequence(scalere_data.flatten(), window=7)
+
+# train and test Split
+split = int(len(X) * 0.8)
+X_train, X_test = X[:split], X[split:]
+y_train_lstm, y_test_lstm = y[:split], y[split:]
+
+
+# Reshape LSTM (samples, timesteps, features)
+X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))
+X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
+
+# Create LSTM Model
+model_lstm = Sequential([
+    LSTM(
+        50, 
+         activation='relu', 
+         input_shape=(7, 1)),
+    Dense(1)
+])
+model_lstm.compile(optimizer='adam', loss='mse')
+model_lstm.fit(X_train, y_train_lstm, epochs=20, verbose=0)
+
+# Prediction
+pred_lstm_scaled = model_lstm.predict(X_test)
+pred_lstm = scaler.inverse_transform(pred_lstm_scaled).flatten()
+
