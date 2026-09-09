@@ -40,3 +40,9 @@ train, test = df.iloc[:train_size], df.iloc[train_size:]
 
 y_train = train['Births']
 y_test = test['Births']
+
+
+# SARIMA Model (with simple parameters)
+model_sarima = ARIMA(y_train, orde=(5, 1, 0))  # Simple (p,d,q)
+model_fit = model_sarima.fit()
+pred_sarima = model_fit.forcast(steps=len(y_test))
