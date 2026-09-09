@@ -102,3 +102,20 @@ mae_lstm = mean_absolute_error(actual_lstm, pred_lstm)
 print('Results of  Evaluation:\n\n')
 print(f"SARIMA  -> RMSE: {rmse_sarima:.2f}, MAE: {mae_sarima:.2f}")
 print(f"LSTM    -> RMSE: {rmse_lstm:.2f}, MAE: {mae_lstm:.2f}")
+
+
+# Simpler Reporting (Chart)
+plt.figure(figsize=(12,5))
+plt.plot(y_test.index, y_test, label='Real Value', color='black')
+plt.plot(y_test.index, pred_sarima, label='SARIMA Prediction', linestyle='--')
+
+lstm_index = y_test.index[-len(pred_lstm):]
+plt.plot(lstm_index, pred_lstm, label='LSTM Prediction', linestyle=':')
+plt.title('Daily birth prediction comparison')
+plt.xlabel('Date')
+plt.ylabel('Number of Births')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+print("\n\nProject Has been Completed!")
