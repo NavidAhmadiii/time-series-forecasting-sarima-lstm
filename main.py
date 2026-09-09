@@ -43,15 +43,15 @@ y_test = test['Births']
 
 
 # SARIMA Model (with simple parameters)
-model_sarima = ARIMA(y_train, orde=(5, 1, 0))  # Simple (p,d,q)
+model_sarima = ARIMA(y_train, order=(5, 1, 0))  # Simple (p,d,q)
 model_fit = model_sarima.fit()
-pred_sarima = model_fit.forcast(steps=len(y_test))
+pred_sarima = model_fit.forecast(steps=len(y_test))
 
 
 # LSTM Model
 def create_sequence(data, window=7):
     X, y = [], []
-    for i in range(data, len(data)):
+    for i in range(window, len(data)):
         X.append(data[i-window:i])
         y.append(data[i])
     return np.array(X), np.array(y)
@@ -75,9 +75,9 @@ X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
 # Create LSTM Model
 model_lstm = Sequential([
     LSTM(
-        50, 
-         activation='relu', 
-         input_shape=(7, 1)),
+        50,
+        activation='relu',
+        input_shape=(7, 1)),
     Dense(1)
 ])
 model_lstm.compile(optimizer='adam', loss='mse')
@@ -85,5 +85,20 @@ model_lstm.fit(X_train, y_train_lstm, epochs=20, verbose=0)
 
 # Prediction
 pred_lstm_scaled = model_lstm.predict(X_test)
-pred_lstm = scaler.inverse_transform(pred_lstm_scaled).flatten()
+pred_lstm = scalere.inverse_transform(pred_lstm_scaled).flatten()
 
+
+# Evaluation
+actual_lstm = scalere.inverse_transform(y_test_lstm.reshape(-1, 1)).flatten()
+
+rmse_sarima = np.sqrt(mean_squared_error(y_test, pred_sarima))
+mae_sarima = mean_absolute_error(y_test, pred_sarima)
+
+
+rmse_lstm = np.sqrt(mean_squared_error(actual_lstm, pred_lstm))
+mae_lstm = mean_absolute_error(actual_lstm, pred_lstm)
+
+
+print('Results of  Evaluation:\n\n')
+print(f"SARIMA  -> RMSE: {rmse_sarima:.2f}, MAE: {mae_sarima:.2f}")
+print(f"LSTM    -> RMSE: {rmse_lstm:.2f}, MAE: {mae_lstm:.2f}")
