@@ -15,8 +15,8 @@ This project demonstrates end-to-end time series forecasting on daily female bir
 ## 📊 Results
 | Model | RMSE | MAE |
 |-------|------|-----|
-| SARIMA | 6.66 | 5.44 |
-| LSTM | 6.53 | 5.30 |
+| SARIMA |7.52 |6.21 |
+| LSTM | 7.35 | 5.92 |
 
 ## 🚀 How to Run
 1. Clone the repository
