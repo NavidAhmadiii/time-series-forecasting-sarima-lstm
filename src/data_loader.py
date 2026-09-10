@@ -7,7 +7,7 @@ def load_data(path="data/daily-total-female-births.csv"):
     df = df.sort_index()
 
     print(f"Data Loaded: {df.shape[0]}Row {df.shape[1]} Col")
-    print(f"📅 From {df.index.min()} to {df.index.max()}")
+    print(f"From {df.index.min()} to {df.index.max()}")
     return df
 
 
