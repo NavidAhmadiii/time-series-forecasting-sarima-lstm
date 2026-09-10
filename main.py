@@ -11,7 +11,7 @@ def main():
     df = load_data('data/daily-total-female-births.csv')
 
     # 2. Split before Feature Engineering
-    train, test = train_test_split_temporal(df, train_ratio=0.8)
+    train, test = train_test_splite_temporal(df, train_ratio=0.8)
 
     # 3. Features (just for reporting/analysis - LSTM and SARIMA use the raw series)
     df_features = build_all_features(df)
