@@ -1,5 +1,5 @@
 import numpy as np
-from src.data_loader import load_data, train_test_split_temporal
+from src.data_loader import load_data, train_test_splite_temporal
 from src.feature_engineering import build_all_features
 from src import sarima_model
 from src import lstm_model

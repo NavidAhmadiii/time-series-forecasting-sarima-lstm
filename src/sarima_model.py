@@ -2,7 +2,8 @@ import os
 import joblib
 import warnings
 import pmdarima as pm
-from statemodel.tsa.statespace.sarimax import SARIMAX
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+
 
 warnings.filterwarnings('ignore')
 

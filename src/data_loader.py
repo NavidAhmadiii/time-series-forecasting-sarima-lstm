@@ -3,7 +3,7 @@ import pandas as pd
 
 def load_data(path="data/daily-total-female-births.csv"):
 
-    df = pd.read_csv(path, parse_dates=['Data'], index_col='Date')
+    df = pd.read_csv(path, parse_dates=['Date'], index_col='Date')
     df = df.sort_index()
 
     print(f"Data Loaded: {df.shape[0]}Row {df.shape[1]} Col")
