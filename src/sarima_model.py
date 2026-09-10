@@ -8,7 +8,7 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 warnings.filterwarnings('ignore')
 
 
-def find_best_params(y_train, seasonal_period=7, max_=5, max_q=5):
+def find_best_params(y_train, seasonal_period=7, max_p=5, max_q=5):
     print("Searching for the best SARIMA parameters...")
 
     auto_model = pm.auto_arima(
@@ -26,11 +26,11 @@ def find_best_params(y_train, seasonal_period=7, max_=5, max_q=5):
         stepwise=True,
         information_criterion='aic'
     )
-    
+
     print(f"\norder: {auto_model.order}")
     print(f"seasonal_order: {auto_model.seasonal_order}")
     print(f"AIC: {auto_model.aic():.2f}")
-    
+
     return {
         'order': auto_model.order,
         'seasonal_order': auto_model.seasonal_order,
