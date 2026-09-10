@@ -31,7 +31,7 @@ def prepare_data(train_series, window=7):
     scaler = StandardScaler()
     scaled_train = scaler.fit_transform(train_series.reshape(-1, 1)).flatten()
 
-    X, y = create_sequences(scaled_train, window)
+    X, y = create_sequence(scaled_train, window)
     X = X.reshape((X.shape[0], X.shape[1], 1))
 
     return X, y, scaler
